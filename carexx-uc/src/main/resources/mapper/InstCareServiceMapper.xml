@@ -33,6 +33,7 @@
 	    SELECT
 	  		ics.id id,
 	  		cs.service_name serviceName,
+	  		cs.service_explain serviceExplain,
 	  		ics.service_id serviceId,
 	  		wt.id workTypeId,
 	  		wt.work_type_name workTypeName,
@@ -113,6 +114,7 @@
 	  		ics.id id,
 	  		ics.inst_id instId,
 	  		cs.service_name serviceName,
+	  		cs.service_explain serviceExplain,
 	  		ics.service_id serviceId,
 	  		wt.id workTypeId,
 	  		wt.work_type_name workTypeName,

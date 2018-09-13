@@ -72,6 +72,8 @@ public class AclUserController {
 		if (aclUserAcct.getInstId() > 0) {
 			CareInst careInst = this.careInstService.getById(id);
 			detailMap.put("instInfo", careInst);
+			CareInst inst = this.careInstService.getById(aclUserAcct.getInstId());
+			detailMap.put("careInst", inst);
 		}
 		AclRole aclRole = this.aclRoleService.getByUserId(id);
 		detailMap.put("roleInfo", aclRole);

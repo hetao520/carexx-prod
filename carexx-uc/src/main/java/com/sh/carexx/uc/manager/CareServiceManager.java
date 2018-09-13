@@ -49,6 +49,7 @@ public class CareServiceManager {
 		careService = new CareService();
 		careService.setWorkTypeId(careServiceFormBean.getWorkTypeId());
 		careService.setServiceName(careServiceFormBean.getServiceName());
+		careService.setServiceExplain(careServiceFormBean.getServiceExplain());
 		careService.setServiceStatus(UseStatus.ENABLED.getValue());
 		this.careServiceService.save(careService);
 	}
@@ -72,6 +73,7 @@ public class CareServiceManager {
 		careService.setId(careServiceFormBean.getId());
 		careService.setWorkTypeId(careServiceFormBean.getWorkTypeId());
 		careService.setServiceName(careServiceFormBean.getServiceName());
+		careService.setServiceExplain(careServiceFormBean.getServiceExplain());
 		this.careServiceService.update(careService);
 	}
 
