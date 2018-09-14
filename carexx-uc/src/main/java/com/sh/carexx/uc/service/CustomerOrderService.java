@@ -136,7 +136,7 @@ public interface CustomerOrderService {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<?,?>> queryIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	List<Map<String,Object>> queryIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	
 	/**
 	 * 

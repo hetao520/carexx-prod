@@ -1,5 +1,6 @@
 package com.sh.carexx.uc.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -121,8 +122,20 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	}
 
 	@Override
-	public List<Map<?, ?>> queryIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
-		return this.customerOrderMapper.selectIncomeCount(customerOrderQueryFormBean);
+	public List<Map<String, Object>> queryIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		List<Map<String, Object>> incomeCount = this.customerOrderMapper.selectIncomeCount(customerOrderQueryFormBean);
+		for(Map<String, Object> map : incomeCount){
+			BigDecimal orderAmt = new BigDecimal(String.valueOf(map.get("orderAmt")));
+			BigDecimal orderAdjustAmt = new BigDecimal(String.valueOf(map.get("orderAdjustAmt")));
+			Integer payType = Integer.parseInt(String.valueOf(map.get("payType")));
+			if(payType < 4){
+				BigDecimal pounDage = ((orderAmt.add(orderAdjustAmt)).multiply(new BigDecimal(0.006))).setScale(2,BigDecimal.ROUND_HALF_UP);
+				map.put("pounDage", pounDage);
+			}else{
+				map.put("pounDage", 0.0);
+			}
+		}
+		return incomeCount;
 	}
 
 	@Override
