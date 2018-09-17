@@ -107,6 +107,17 @@ public interface CustomerOrderMapper {
 	
 	/**
 	 * 
+	 * selectInstIncomeCount:(机构收入统计). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param customerOrderQueryFormBean
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<String, Object>> selectInstIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	
+	/**
+	 * 
 	 * updateStatus:(修改订单状态). <br/> 
 	 * 
 	 * @author hetao 
@@ -138,7 +149,7 @@ public interface CustomerOrderMapper {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<String,Object>> selectIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	List<Map<String, Object>> selectIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	
 	/**
 	 * 

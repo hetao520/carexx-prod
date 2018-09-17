@@ -102,6 +102,17 @@ public interface CustomerOrderService {
 	 * @since JDK 1.8
 	 */
 	List<Map<?,?>> queryOrderExistence(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	
+	/**
+	 * 
+	 * queryInstIncomeCount:(机构收入统计). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param customerOrderQueryFormBean
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	List<Map<String, Object>> queryInstIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
 
 	/**
 	 * 
@@ -136,7 +147,7 @@ public interface CustomerOrderService {
 	 * @return 
 	 * @since JDK 1.8
 	 */
-	List<Map<String,Object>> queryIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	List<Map<String, Object>> queryIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
 	
 	/**
 	 * 

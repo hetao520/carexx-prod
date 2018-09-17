@@ -9,6 +9,8 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 
 	private Integer instId;
 
+	private String instName;
+	
 	private String orderType;
 
 	private String orderNo;
@@ -34,7 +36,7 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 	private String serviceEndTime;
 
 	private String orderStatus;
-
+	
 	private String selectType;
 
 	private String payType;
@@ -55,6 +57,14 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 
 	public void setInstId(Integer instId) {
 		this.instId = instId;
+	}
+
+	public String getInstName() {
+		return instName;
+	}
+
+	public void setInstName(String instName) {
+		this.instName = instName;
 	}
 
 	public Byte getOrderType() {
@@ -175,7 +185,7 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-
+	
 	public String getSelectType() {
 		return selectType;
 	}

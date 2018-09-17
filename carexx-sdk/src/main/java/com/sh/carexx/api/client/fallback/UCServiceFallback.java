@@ -426,6 +426,11 @@ public class UCServiceFallback implements UCServiceClient {
 	public String queryIncomeCountForList(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
 		return null;
 	}
+	
+	@Override
+	public String queryInstIncomeCountForList(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		return null;
+	}
 
 	@Override
 	public BasicRetVal customerOrderAdjust(CustomerOrderAdjustFormBean customerOrderAdjustFormBean) {

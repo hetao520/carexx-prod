@@ -101,6 +101,12 @@ public class CustomerOrderController {
 	public OrderPayment getOrderPayment(@PathVariable("orderNo") String orderNo) {
 		return this.orderPaymentService.getByOrderNo(orderNo);
 	}
+	
+	@RequestMapping(value = "/inst_income_count", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String queryInstIncomeCountForList(@RequestBody CustomerOrderQueryFormBean CustomerOrderQueryFormBean) {
+		List<Map<String, Object>> result = this.customerOrderService.queryInstIncomeCount(CustomerOrderQueryFormBean);
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, result).toJSON();
+	}
 
 	@RequestMapping(value = "/cancel/{orderNo}", method = RequestMethod.GET)
 	public BasicRetVal cancel(@PathVariable("orderNo") String orderNo) {

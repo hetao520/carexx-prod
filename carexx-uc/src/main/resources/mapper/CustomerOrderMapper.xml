@@ -405,6 +405,37 @@
 			co.create_time,cos.id DESC
 		</if>
 	</select>
+	
+	<select id="selectInstIncomeCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
+		SELECT
+			ci.id instId,
+			ci.inst_name instName,
+			op.pay_type payType,
+			co.order_amt orderAmt,
+			co.adjust_amt adjustAmt,
+			SUM(os.staff_settle_amt) staffSettleAmt,
+			SUM(os.inst_settle_amt) instSettleAmt
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_care_inst ci ON co.inst_id = ci.id
+		LEFT JOIN carexx_order_payment op ON co.order_no = op.order_no
+		LEFT JOIN carexx_customer_order_schedule cos ON cos.order_no = co.order_no
+		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
+		<where>
+			co.order_status = 6
+		AND ci.inst_status = 1
+		<if test="instName != null and instName != '' ">
+			and ci.inst_name like CONCAT('%', '${instName}', '%')
+		</if>
+		<if test="serviceStartTime != null and serviceStartTime != '' ">
+			and DATE_FORMAT(co.service_start_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[>=]]> DATE_FORMAT(#{serviceStartTime},<![CDATA['%Y-%m-%d']]>)
+		</if>
+		<if test="serviceEndTime != null and serviceEndTime != '' ">
+			and DATE_FORMAT(co.service_start_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[<=]]> DATE_FORMAT(#{serviceEndTime},<![CDATA['%Y-%m-%d']]>)
+		</if>
+		</where>
+		GROUP BY co.order_no
+	</select>
 
 	<update id="updateStatus">
 		UPDATE
@@ -438,5 +469,5 @@
 		where
 			order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
-
+	
 </mapper>

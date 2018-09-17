@@ -795,6 +795,9 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorder/adjust", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal customerOrderAdjust(@RequestBody CustomerOrderAdjustFormBean customerOrderAdjustFormBean);
 
+	@RequestMapping(value = "/customerorder/inst_income_count", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryInstIncomeCountForList(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	
 	/**
 	 * 
 	 * queryUserMsgList:(查询用户消息). <br/>

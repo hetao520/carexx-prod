@@ -84,6 +84,10 @@ public class CustomerOrderController extends BaseController {
 		customerOrderQueryFormBean.setInstId(this.getCurrentUser().getInstId());
 		return this.ucServiceClient.queryIncomeCountForList(customerOrderQueryFormBean);
 	}
+	@RequestMapping(value = "/inst_income_count")
+	public String queryInstIncomeCountForList(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		return this.ucServiceClient.queryInstIncomeCountForList(customerOrderQueryFormBean);
+	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/export_income_count")
@@ -142,6 +146,29 @@ public class CustomerOrderController extends BaseController {
 		String[] cols = { "orderNo", "realName", "signingPerson", "areaWard", "workTypeName", "staffName",
 				"instSysName", "proofType", "receiptInvoice", "startTime", "endTime", "days", "holiday", "orderAmt",
 				"orderAdjustAmt", "staffSettleAmt", "settleAdjustAmt", "instSettleAmt", "pounDage", "orderRemark" };
+		int[] numColIndexs = {};
+		ExcelExporter<Map<String, Object>> exporter = new ExcelExporter(fileName, heads, cols, resultList,
+				numColIndexs);
+		exporter.export(req, resp);
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/export_inst_income_count")
+	public void exportInstIncomeCountReport(HttpServletRequest req, HttpServletResponse resp,
+			CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		String fileName = DateUtils.toString(DateUtils.YYYYMMDDHHMMSS) + ".xls";
+		String result = this.ucServiceClient.queryInstIncomeCountForList(customerOrderQueryFormBean);
+		if (StringUtils.isBlank(result)) {
+			return;
+		}
+		DataRetVal dataRetVal = JSONUtils.toBean(result, DataRetVal.class);
+		if (dataRetVal == null || CarexxConstant.RetCode.SUCCESS != dataRetVal.getCode()) {
+			return;
+		}
+		List<Map<String, Object>> resultList = (List) dataRetVal.getData();
+		
+		String[] heads = { "机构名称", "订单金额", "调整金额", "结算款", "管理费", "微信手续费" };
+		String[] cols = { "instName", "orderAmt", "adjustAmt", "staffSettleAmt", "instSettleAmt", "pounDage" };
 		int[] numColIndexs = {};
 		ExcelExporter<Map<String, Object>> exporter = new ExcelExporter(fileName, heads, cols, resultList,
 				numColIndexs);
