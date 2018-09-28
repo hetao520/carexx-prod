@@ -126,7 +126,7 @@ public class AclRoleServiceImpl implements AclRoleService {
 	}
 
 	@Override
-	public List<AclRole> queryAllAvailable(Integer userId) {
-		return this.aclRoleMapper.selectAllAvailable(userId);
+	public List<AclRole> queryAllAvailable(Integer instId) {
+		return this.aclRoleMapper.selectAllAvailable(instId);
 	}
 }

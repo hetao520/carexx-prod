@@ -17,7 +17,7 @@ public interface AclRoleService {
 
 	Integer getAclRoleCount(AclRoleFormBean aclRoleFormBean);
 	
-	List<AclRole> queryAllAvailable(Integer creator);
+	List<AclRole> queryAllAvailable(Integer instId);
 
 	List<AclRole> queryAclRoleList(AclRoleFormBean aclRoleFormBean);
 

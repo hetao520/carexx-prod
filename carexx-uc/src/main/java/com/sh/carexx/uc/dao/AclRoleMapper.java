@@ -16,7 +16,7 @@ public interface AclRoleMapper {
 
 	Integer selectAclRoleCount(AclRoleFormBean aclRoleFormBean);
 	
-	List<AclRole> selectAllAvailable(Integer userId);
+	List<AclRole> selectAllAvailable(@Param("instId") Integer instId);
 
 	List<AclRole> selectAclRoleList(AclRoleFormBean aclRoleFormBean);
 

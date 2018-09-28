@@ -54,9 +54,9 @@ public class AclRoleController {
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, resultList)).toJSON();
 	}
 
-	@RequestMapping(value = "/list_all/{userId}", method = RequestMethod.GET)
-	public String queryAllAvailable(@PathVariable("userId") Integer userId) {
-		List<AclRole> resultList = this.aclRoleService.queryAllAvailable(userId);
+	@RequestMapping(value = "/list_all/{instId}", method = RequestMethod.GET)
+	public String queryAllAvailable(@PathVariable("instId") Integer instId) {
+		List<AclRole> resultList = this.aclRoleService.queryAllAvailable(instId);
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, resultList).toJSON();
 	}
 
