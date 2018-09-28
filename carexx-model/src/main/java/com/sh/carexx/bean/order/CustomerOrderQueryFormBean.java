@@ -13,6 +13,8 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 	
 	private String orderType;
 
+	private String serviceAddress;
+	
 	private String orderNo;
 
 	private Integer userId;
@@ -76,6 +78,17 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 
 	public void setOrderType(String orderType) {
 		this.orderType = orderType;
+	}
+	
+	public Byte getServiceAddress() {
+		if (ValidUtils.isInteger(serviceAddress)) {
+			return Byte.parseByte(serviceAddress);
+		}
+		return null;
+	}
+
+	public void setServiceAddress(String serviceAddress) {
+		this.serviceAddress = serviceAddress;
 	}
 
 	public String getOrderNo() {

@@ -34,7 +34,7 @@ public class CustomerOrderController extends BaseController {
 	@RequestMapping(value = "/addappointorder")
 	public BasicRetVal addAppointOrder(@Valid CustomerAppointOrderFormBean customerAppointOrderFormBean,
 			BindingResult bindingResult) {
-		if (customerAppointOrderFormBean.getCustomerId() == null) {
+		if (customerAppointOrderFormBean.getCustomerId() == null || customerAppointOrderFormBean.getInpatientAreaId() == null) {
 			customerAppointOrderFormBean.setCustomerId(this.getCurrentUser().getId().toString());
 		}
 		if (bindingResult.hasErrors()) {

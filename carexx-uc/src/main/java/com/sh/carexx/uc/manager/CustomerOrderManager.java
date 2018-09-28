@@ -23,6 +23,7 @@ import com.sh.carexx.common.enums.order.OrderSettleStatus;
 import com.sh.carexx.common.enums.order.OrderStatus;
 import com.sh.carexx.common.enums.order.OrderType;
 import com.sh.carexx.common.enums.order.ProofType;
+import com.sh.carexx.common.enums.order.ServiceAddress;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.keygen.KeyGenerator;
 import com.sh.carexx.common.util.DateUtils;
@@ -199,13 +200,14 @@ public class CustomerOrderManager {
 
 		CustomerOrder customerOrder = new CustomerOrder();
 		customerOrder.setOrderType(OrderType.UNDERLINE_ORDER.getValue());
+		customerOrder.setServiceAddress(ServiceAddress.INST.getValue());
 		customerOrder.setInstId(customerOrderFormBean.getInstId());
 		customerOrder.setCustomerId(customerOrderFormBean.getCustomerId());
 		customerOrder.setServiceId(customerOrderFormBean.getServiceId());
 		String orderNo = this.keyGenerator.generateOrderNo();
 		customerOrder.setOrderNo(orderNo);
 		customerOrder.setInpatientAreaId(customerOrderFormBean.getInpatientAreaId());
-		customerOrder.setInpatientWard(customerOrderFormBean.getInpatientWard());
+        customerOrder.setAccurateAddress(customerOrderFormBean.getAccurateAddress());
 		customerOrder.setServiceStartTime(serviceStartTime);
 		customerOrder.setServiceEndTime(serviceEndTime);
 		customerOrder.setOrderAmt(this.calcServiceFee(customerOrder.getInstId(), customerOrder.getServiceId(),
@@ -288,6 +290,7 @@ public class CustomerOrderManager {
 
 		CustomerOrder customerOrder = new CustomerOrder();
 		customerOrder.setOrderType(OrderType.ONLINE_ORDER.getValue());
+		customerOrder.setServiceAddress(ServiceAddress.INST.getValue());
 		customerOrder.setInstId(customerAppointOrderFormBean.getInstId());
 		customerOrder.setUserId(customerAppointOrderFormBean.getCustomerId());
 		customerOrder.setCustomerId(customerId);
@@ -295,7 +298,7 @@ public class CustomerOrderManager {
 		String orderNo = this.keyGenerator.generateOrderNo();
 		customerOrder.setOrderNo(orderNo);
 		customerOrder.setInpatientAreaId(customerAppointOrderFormBean.getInpatientAreaId());
-		customerOrder.setInpatientWard(customerAppointOrderFormBean.getInpatientWard());
+        customerOrder.setAccurateAddress(customerAppointOrderFormBean.getAccurateAddress());
 		customerOrder.setServiceStartTime(serviceStartTime);
 		customerOrder.setServiceEndTime(serviceEndTime);
 		customerOrder.setOrderAmt(this.calcServiceFee(customerOrder.getInstId(), customerOrder.getServiceId(),
