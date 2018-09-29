@@ -30,7 +30,7 @@
 			cos.service_end_time serviceEndTime,
 			co.order_no orderNo,
 			cia.inpatient_area inpatientArea,
-			co.accurate_address accurateAddress,
+			co.inpatient_ward inpatientWard,
 			ic.real_name patientName,
 			cs.service_name serviceName,
 			os.settle_ratio settleRatio,

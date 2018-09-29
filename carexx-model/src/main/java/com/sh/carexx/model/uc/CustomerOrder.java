@@ -26,7 +26,7 @@ public class CustomerOrder {
 
 	private Integer inpatientAreaId;
 
-	private String accurateAddress;
+	private String inpatientWard;
 
 	private Date serviceStartTime;
 
@@ -142,12 +142,12 @@ public class CustomerOrder {
 		this.inpatientAreaId = inpatientAreaId;
 	}
 
-	public String getAccurateAddress() {
-		return accurateAddress;
+	public String getInpatientWard() {
+		return inpatientWard;
 	}
 
-	public void setAccurateAddress(String accurateAddress) {
-		this.accurateAddress = accurateAddress == null ? null : accurateAddress.trim();
+	public void setInpatientWard(String inpatientWard) {
+		this.inpatientWard = inpatientWard == null ? null : inpatientWard.trim();
 	}
 
 	public Date getServiceStartTime() {

@@ -28,12 +28,12 @@ public class CustomerOrderFormBean extends BasicFormBean {
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
 	private String serviceId;
 
-	@NotBlank
 	@Pattern(regexp = CarexxConstant.Regex.INTEGER_POSITIVE)
 	private String inpatientAreaId;
 
+	@NotBlank
 	@Size(max = 20)
-	private String accurateAddress;
+	private String inpatientWard;
 
 	@NotBlank
 	@Pattern(regexp = CarexxConstant.Regex.DATETIME)
@@ -132,12 +132,12 @@ public class CustomerOrderFormBean extends BasicFormBean {
 		this.inpatientAreaId = inpatientAreaId;
 	}
 
-    public String getAccurateAddress() {
-        return accurateAddress;
+    public String getInpatientWard() {
+        return inpatientWard;
     }
 
-    public void setAccurateAddress(String accurateAddress) {
-        this.accurateAddress = accurateAddress;
+    public void setInpatientWard(String inpatientWard) {
+        this.inpatientWard = inpatientWard;
     }
 
 	public String getServiceStartTime() {

@@ -207,7 +207,7 @@ public class CustomerOrderManager {
 		String orderNo = this.keyGenerator.generateOrderNo();
 		customerOrder.setOrderNo(orderNo);
 		customerOrder.setInpatientAreaId(customerOrderFormBean.getInpatientAreaId());
-        customerOrder.setAccurateAddress(customerOrderFormBean.getAccurateAddress());
+        customerOrder.setInpatientWard(customerOrderFormBean.getInpatientWard());
 		customerOrder.setServiceStartTime(serviceStartTime);
 		customerOrder.setServiceEndTime(serviceEndTime);
 		customerOrder.setOrderAmt(this.calcServiceFee(customerOrder.getInstId(), customerOrder.getServiceId(),
@@ -298,7 +298,7 @@ public class CustomerOrderManager {
 		String orderNo = this.keyGenerator.generateOrderNo();
 		customerOrder.setOrderNo(orderNo);
 		customerOrder.setInpatientAreaId(customerAppointOrderFormBean.getInpatientAreaId());
-        customerOrder.setAccurateAddress(customerAppointOrderFormBean.getAccurateAddress());
+        customerOrder.setInpatientWard(customerAppointOrderFormBean.getInpatientWard());
 		customerOrder.setServiceStartTime(serviceStartTime);
 		customerOrder.setServiceEndTime(serviceEndTime);
 		customerOrder.setOrderAmt(this.calcServiceFee(customerOrder.getInstId(), customerOrder.getServiceId(),

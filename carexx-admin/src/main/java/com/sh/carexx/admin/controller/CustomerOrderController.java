@@ -111,7 +111,7 @@ public class CustomerOrderController extends BaseController {
 						? ProofType.RECEIPT.getDesc() : ProofType.INVOICE.getDesc());
 
 				String areaWard = String.valueOf(map.get("inpatientArea")) + "/"
-						+ String.valueOf(map.get("accurateAddress"));
+						+ String.valueOf(map.get("inpatientWard"));
 				map.put("areaWard", areaWard);
 
 				String receiptInvoice = (String.valueOf(map.get("receiptNo")) + String.valueOf(map.get("invoiceNo")))

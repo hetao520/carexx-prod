@@ -4,6 +4,7 @@
 	<resultMap id="BaseResultMap" type="com.sh.carexx.model.uc.CustomerOrder">
 		<id column="id" jdbcType="BIGINT" property="id" />
 		<result column="order_type" jdbcType="TINYINT" property="orderType" />
+		<result column="service_address" jdbcType="TINYINT" property="serviceAddress" />
 		<result column="user_id" jdbcType="INTEGER" property="userId" />
 		<result column="customer_id" jdbcType="INTEGER" property="customerId" />
 		<result column="inst_id" jdbcType="INTEGER" property="instId" />
@@ -12,7 +13,7 @@
 		<result column="order_amt" jdbcType="DECIMAL" property="orderAmt" />
 		<result column="adjust_amt" jdbcType="DECIMAL" property="adjustAmt" />
 		<result column="inpatient_area_id" jdbcType="INTEGER" property="inpatientAreaId" />
-		<result column="accurate_address" jdbcType="VARCHAR" property="accurateAddress" />
+		<result column="inpatient_ward" jdbcType="VARCHAR" property="inpatientWard" />
 		<result column="service_start_time" jdbcType="TIMESTAMP" property="serviceStartTime" />
 		<result column="service_end_time" jdbcType="TIMESTAMP" property="serviceEndTime" />
 		<result column="holiday" jdbcType="DECIMAL" property="holiday" />
@@ -28,7 +29,7 @@
 		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, order_type, service_address, user_id, customer_id, inst_id, service_id, order_no, order_amt, adjust_amt, inpatient_area_id, accurate_address, service_start_time,
+		id, order_type, service_address, user_id, customer_id, inst_id, service_id, order_no, order_amt, adjust_amt, inpatient_area_id, inpatient_ward, service_start_time,
 		service_end_time, holiday, order_status, operator, order_remark, inst_sys_id, proof_type, receipt_no, invoice_no, signing_person, create_time, modify_time
 	</sql>
 
@@ -58,7 +59,7 @@
 		co.order_no orderNo,
 		co.order_amt orderAmt,
 		cia.inpatient_area inpatientArea,
-		co.accurate_address accurateAddress,
+		co.inpatient_ward inpatientWard,
 		co.service_start_time serviceStartTime,
 		co.service_end_time serviceEndTime,
 		co.order_status orderStatus,
@@ -152,7 +153,7 @@
 		co.order_amt orderAmt,
 		co.adjust_amt adjustAmt,
 		cia.inpatient_area inpatientArea,
-		co.accurate_address accurateAddress,
+		co.inpatient_ward inpatientWard,
 		co.service_start_time serviceStartTime,
 		co.service_end_time serviceEndTime,
 		co.holiday holiday,
@@ -227,8 +228,8 @@
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrder">
 		INSERT INTO carexx_customer_order (
 			order_type, service_address, user_id, customer_id, inst_id,
-			service_id, order_no, order_amt, adjust_amt, inpatient_area_id, accurate_address,
-			service_start_time, service_end_time, holiday, order_status, operator_id, order_remark,
+			service_id, order_no, order_amt, adjust_amt, inpatient_area_id, inpatient_ward,
+			service_start_time, service_end_time, holiday, order_status, operator, order_remark,
 			inst_sys_id, proof_type, receipt_no, invoice_no, signing_person, create_time
 			)
 		VALUES (
@@ -236,9 +237,9 @@
 			#{customerId,jdbcType=INTEGER},
 			#{instId,jdbcType=INTEGER},
 			#{serviceId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{orderAmt,jdbcType=DECIMAL}, #{adjustAmt,jdbcType=DECIMAL},
-			#{inpatientAreaId,jdbcType=INTEGER}, #{accurateAddress,jdbcType=VARCHAR},
+			#{inpatientAreaId,jdbcType=INTEGER}, #{inpatientWard,jdbcType=VARCHAR},
 			#{serviceStartTime,jdbcType=TIMESTAMP}, #{serviceEndTime,jdbcType=TIMESTAMP}, #{holiday,jdbcType=DECIMAL},
-			#{orderStatus,jdbcType=TINYINT}, #{operatorId,jdbcType=INTEGER}, #{orderRemark,jdbcType=VARCHAR},
+			#{orderStatus,jdbcType=TINYINT}, #{operator,jdbcType=INTEGER}, #{orderRemark,jdbcType=VARCHAR},
 			#{instSysId,jdbcType=INTEGER}, #{proofType,jdbcType=TINYINT}, #{receiptNo,jdbcType=VARCHAR},
 			#{invoiceNo,jdbcType=VARCHAR}, #{signingPerson,jdbcType=VARCHAR}, now()
 		)
@@ -297,7 +298,7 @@
 		co.inst_sys_id instSysId,
 		ccis.inst_sys_name instSysName,
 		cia.inpatient_area inpatientArea,
-		co.accurate_address accurateAddress,
+		co.inpatient_ward inpatientWard,
 		op.pay_type payType,
 		co.order_no orderNo,
 		co.operator operator,
