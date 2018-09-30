@@ -393,6 +393,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public BasicRetVal addCommunityCustomerOrder(CustomerOrderFormBean customerOrderFormBean) {
+		return null;
+	}
+	
+	@Override
 	public BasicRetVal addCustomerAppointOrder(CustomerAppointOrderFormBean customerAppointOrderFormBean) {
 		return null;
 	}
@@ -569,6 +574,11 @@ public class UCServiceFallback implements UCServiceClient {
 
 	@Override
 	public BasicRetVal addCustomerOrderSchedule(CustomerOrderScheduleFormBean customerOrderScheduleFormBean) {
+		return null;
+	}
+	
+	@Override
+	public BasicRetVal addOutSendOrderSchedule(CustomerOrderScheduleFormBean customerOrderScheduleFormBean) {
 		return null;
 	}
 

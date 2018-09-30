@@ -168,6 +168,41 @@ public class CustomerOrderScheduleManager {
 					OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
 		}
 	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+	public void outSendShedule(CustomerOrderScheduleFormBean customerOrderScheduleFormBean) throws BizException{
+		Date serviceStartTime = null;
+		Date serviceEndTime = null;
+		if (ValidUtils.isDateTime(customerOrderScheduleFormBean.getServiceStartTime())) {
+			serviceStartTime = DateUtils.toDate(customerOrderScheduleFormBean.getServiceStartTime(),
+					DateUtils.YYYY_MM_DD_HH_MM_SS);
+		}
+		if (ValidUtils.isDateTime(customerOrderScheduleFormBean.getServiceEndTime())) {
+			serviceEndTime = DateUtils.toDate(customerOrderScheduleFormBean.getServiceEndTime(),
+					DateUtils.YYYY_MM_DD_HH_MM_SS);
+		}
+		CustomerOrderSchedule customerOrderSchedule = new CustomerOrderSchedule();
+		customerOrderSchedule.setOrderNo(customerOrderScheduleFormBean.getOrderNo());
+		customerOrderSchedule.setServiceStaffId(customerOrderScheduleFormBean.getServiceStaffId());
+		customerOrderSchedule.setServiceStartTime(serviceStartTime);
+		customerOrderSchedule.setServiceEndTime(serviceEndTime);
+		BigDecimal orderAmt = new BigDecimal(customerOrderScheduleFormBean.getOrderAmt());
+		// 判断订单金额小于0时,将排班金额修改为负数
+		if (orderAmt.compareTo(BigDecimal.ZERO) == -1) {
+			customerOrderSchedule.setServiceDuration(DateUtils.getHourDiff(serviceStartTime, serviceEndTime) * (-1));
+		} else {
+			customerOrderSchedule.setServiceDuration(DateUtils.getHourDiff(serviceStartTime, serviceEndTime));
+		}
+		customerOrderSchedule.setWorkTypeSettleId(customerOrderScheduleFormBean.getWorkTypeSettleId());
+		customerOrderSchedule.setServiceStatus(OrderScheduleStatus.IN_SERVICE.getValue());
+		// 添加排班记录
+		this.customerOrderScheduleService.save(customerOrderSchedule);
+		// 添加结算记录
+		this.orderSettleManager.add(customerOrderSchedule);
+		// 将订单状态从待排班改为服务中
+		this.customerOrderService.updateStatus(customerOrderScheduleFormBean.getOrderNo(),
+				OrderStatus.WAIT_SCHEDULE.getValue(), OrderStatus.IN_SERVICE.getValue());
+	}
 
 	/**
 	 * 

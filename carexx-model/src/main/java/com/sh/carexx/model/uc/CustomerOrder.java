@@ -13,6 +13,8 @@ public class CustomerOrder {
 	private Integer userId;
 
 	private Integer customerId;
+	
+	private String phone;
 
 	private Integer instId;
 
@@ -94,6 +96,14 @@ public class CustomerOrder {
 		this.customerId = customerId;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
 	public Integer getInstId() {
 		return instId;
 	}

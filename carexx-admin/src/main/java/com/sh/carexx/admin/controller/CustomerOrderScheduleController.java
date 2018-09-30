@@ -32,6 +32,15 @@ public class CustomerOrderScheduleController extends BaseController {
 		return this.ucServiceClient.addCustomerOrderSchedule(customerOrderScheduleFormBean);
 	}
 
+	@RequestMapping("/add_outSend")
+	public BasicRetVal addOutSend(@Valid CustomerOrderScheduleFormBean customerOrderScheduleFormBean,
+						   BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
+		}
+		return this.ucServiceClient.addOutSendOrderSchedule(customerOrderScheduleFormBean);
+	}
+
 	@RequestMapping("/all_schedule/{orderNo}")
 	public String queryScheduleByOrderNo(@PathVariable("orderNo") String orderNo) {
 		return this.ucServiceClient.queryOrderScheduleByOrderNo(orderNo);

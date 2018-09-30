@@ -7,6 +7,7 @@
 		<result column="service_address" jdbcType="TINYINT" property="serviceAddress" />
 		<result column="user_id" jdbcType="INTEGER" property="userId" />
 		<result column="customer_id" jdbcType="INTEGER" property="customerId" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
 		<result column="inst_id" jdbcType="INTEGER" property="instId" />
 		<result column="service_id" jdbcType="INTEGER" property="serviceId" />
 		<result column="order_no" jdbcType="VARCHAR" property="orderNo" />
@@ -29,7 +30,7 @@
 		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, order_type, service_address, user_id, customer_id, inst_id, service_id, order_no, order_amt, adjust_amt, inpatient_area_id, inpatient_ward, service_start_time,
+		id, order_type, service_address, user_id, customer_id, phone, inst_id, service_id, order_no, order_amt, adjust_amt, inpatient_area_id, inpatient_ward, service_start_time,
 		service_end_time, holiday, order_status, operator, order_remark, inst_sys_id, proof_type, receipt_no, invoice_no, signing_person, create_time, modify_time
 	</sql>
 
@@ -99,6 +100,9 @@
 			<if test="orderType != null and orderType != '' ">
 				and co.order_type = #{orderType,jdbcType=TINYINT}
 			</if>
+			<if test="serviceAddress != null and serviceAddress != '' ">
+				and co.service_address = #{serviceAddress,jdbcType=TINYINT}
+			</if>
 			<if test="orderNo != null and orderNo != '' ">
 				and co.order_no = #{orderNo,jdbcType=VARCHAR}
 			</if>
@@ -136,9 +140,11 @@
 		SELECT
 		co.id id,
 		co.order_type orderType,
+		co.service_address serviceAddress,
 		op.pay_type payType,
 		co.user_id userId,
 		co.customer_id customerId,
+		co.phone phone,
 		ic.real_name realName,
 		ic.phone phone,
 		ic.address address,
@@ -187,6 +193,9 @@
 			<if test="orderType != null and orderType != '' ">
 				and co.order_type = #{orderType,jdbcType=TINYINT}
 			</if>
+			<if test="serviceAddress != null and serviceAddress != '' ">
+				and co.service_address = #{serviceAddress,jdbcType=TINYINT}
+			</if>
 			<if test="orderNo != null and orderNo != '' ">
 				and co.order_no = #{orderNo,jdbcType=VARCHAR}
 			</if>
@@ -227,14 +236,14 @@
 
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrder">
 		INSERT INTO carexx_customer_order (
-			order_type, service_address, user_id, customer_id, inst_id,
+			order_type, service_address, user_id, customer_id, phone, inst_id,
 			service_id, order_no, order_amt, adjust_amt, inpatient_area_id, inpatient_ward,
 			service_start_time, service_end_time, holiday, order_status, operator, order_remark,
 			inst_sys_id, proof_type, receipt_no, invoice_no, signing_person, create_time
 			)
 		VALUES (
 			#{orderType,jdbcType=TINYINT}, #{serviceAddress,jdbcType=TINYINT}, #{userId,jdbcType=INTEGER},
-			#{customerId,jdbcType=INTEGER},
+			#{customerId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR},
 			#{instId,jdbcType=INTEGER},
 			#{serviceId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{orderAmt,jdbcType=DECIMAL}, #{adjustAmt,jdbcType=DECIMAL},
 			#{inpatientAreaId,jdbcType=INTEGER}, #{inpatientWard,jdbcType=VARCHAR},
@@ -300,6 +309,7 @@
 		cia.inpatient_area inpatientArea,
 		co.inpatient_ward inpatientWard,
 		op.pay_type payType,
+		co.service_address serviceAddress,
 		co.order_no orderNo,
 		co.operator operator,
 		cis.real_name staffName,
@@ -362,6 +372,9 @@
 			<if test="payType != null and payType != '' ">
 				and op.pay_type = #{payType,jdbcType=TINYINT}
 			</if>
+			<if test="serviceAddress != null and serviceAddress != '' ">
+				and co.service_address = #{serviceAddress,jdbcType=TINYINT}
+			</if>
 			<if test="realName != null and realName != '' ">
 				and ic.real_name like CONCAT('%', '${realName}', '%')
 			</if>
@@ -412,6 +425,7 @@
 			ci.id instId,
 			ci.inst_name instName,
 			op.pay_type payType,
+			co.service_address serviceAddress,
 			co.order_amt orderAmt,
 			co.adjust_amt adjustAmt,
 			SUM(os.staff_settle_amt) staffSettleAmt,
@@ -427,6 +441,9 @@
 		AND ci.inst_status = 1
 		<if test="instName != null and instName != '' ">
 			and ci.inst_name like CONCAT('%', '${instName}', '%')
+		</if>
+		<if test="serviceAddress != null and serviceAddress != '' ">
+			and co.service_address = #{serviceAddress,jdbcType=TINYINT}
 		</if>
 		<if test="serviceStartTime != null and serviceStartTime != '' ">
 			and DATE_FORMAT(co.service_start_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[>=]]> DATE_FORMAT(#{serviceStartTime},<![CDATA['%Y-%m-%d']]>)

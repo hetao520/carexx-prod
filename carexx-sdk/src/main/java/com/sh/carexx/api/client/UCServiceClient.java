@@ -663,6 +663,8 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorder/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal addCustomerOrder(@RequestBody CustomerOrderFormBean customerOrderFormBean);
 
+	@RequestMapping(value = "/customerorder/add_community", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal addCommunityCustomerOrder(@RequestBody CustomerOrderFormBean customerOrderFormBean);
 	/**
 	 * 
 	 * addCustomerOrder:(移动端添加客户服务预约订单). <br/>
@@ -1078,6 +1080,18 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/customerorderschedule/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal addCustomerOrderSchedule(@RequestBody CustomerOrderScheduleFormBean customerOrderScheduleFormBean);
 
+	/**
+	 *
+	 * addOutSendOrderSchedule:(添加外派排班). <br/>
+	 *
+	 * @author hetao
+	 * @param customerOrderScheduleFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/customerorderschedule/add_outSend", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal addOutSendOrderSchedule(@RequestBody CustomerOrderScheduleFormBean customerOrderScheduleFormBean);
+	
 	/**
 	 * 
 	 * queryOrderScheduleStaff:(通过订单号查询订单排班). <br/>
