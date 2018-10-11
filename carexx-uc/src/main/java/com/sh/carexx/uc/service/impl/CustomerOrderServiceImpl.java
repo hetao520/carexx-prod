@@ -172,8 +172,26 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 							outputPounDage = outputPounDage.add(inputPounDage);
 						}
 						
+						BigDecimal onlinePayAmt = new BigDecimal(String.valueOf(outputInstIncomeCountMap.get("onlinePayAmt")));
+						BigDecimal scanPayAmt = new BigDecimal(String.valueOf(outputInstIncomeCountMap.get("scanPayAmt")));
+						BigDecimal cashPayAmt = new BigDecimal(String.valueOf(outputInstIncomeCountMap.get("cashPayAmt")));
+						BigDecimal companyTurnAccountAmt = new BigDecimal(String.valueOf(outputInstIncomeCountMap.get("companyTurnAccountAmt")));
+						if(payType == PayMethod.ONLINE_PAY.getValue()) {
+							onlinePayAmt = onlinePayAmt.add(inputOrderAmt);
+						}else if(payType == PayMethod.SCAN_PAY.getValue()) {
+							scanPayAmt = scanPayAmt.add(inputOrderAmt);
+						}else if(payType == PayMethod.CASH_PAY.getValue()) {
+							cashPayAmt = cashPayAmt.add(inputOrderAmt);
+						}else if(payType == PayMethod.COMPANY_TURN_ACCOUNT.getValue()) {
+							companyTurnAccountAmt = companyTurnAccountAmt.add(inputOrderAmt);
+						}
+						
 						outputInstIncomeCountMap.put("orderAmt",outputOrderAmt);
 						outputInstIncomeCountMap.put("adjustAmt",outputAdjustAmt);
+						outputInstIncomeCountMap.put("onlinePayAmt",onlinePayAmt);
+						outputInstIncomeCountMap.put("scanPayAmt",scanPayAmt);
+						outputInstIncomeCountMap.put("cashPayAmt",cashPayAmt);
+						outputInstIncomeCountMap.put("companyTurnAccountAmt",companyTurnAccountAmt);
 						outputInstIncomeCountMap.put("staffSettleAmt",outputStaffSettleAmt);
 						outputInstIncomeCountMap.put("instSettleAmt",outputInstSettleAmt);
 						outputInstIncomeCountMap.put("pounDage",outputPounDage);
@@ -191,6 +209,11 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 				continue;
 			}
 			
+			BigDecimal onlinePayAmt = new BigDecimal(0);
+			BigDecimal scanPayAmt = new BigDecimal(0);
+			BigDecimal cashPayAmt = new BigDecimal(0);
+			BigDecimal companyTurnAccountAmt = new BigDecimal(0);
+			
 			Map<String, Object> outputInstIncomeCountMap = new HashMap<String, Object>();
 			
 			BigDecimal outputOrderAmt = new BigDecimal(String.valueOf(inputInstIncomeCountMap.get("orderAmt"))).add(new BigDecimal(String.valueOf(inputInstIncomeCountMap.get("adjustAmt"))));
@@ -203,10 +226,24 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 				outputPounDage = outputPounDage.add(inputPounDage);
 			}
 			
+			if(payType == PayMethod.ONLINE_PAY.getValue()) {
+				onlinePayAmt = onlinePayAmt.add(outputOrderAmt);
+			}else if(payType == PayMethod.SCAN_PAY.getValue()) {
+				scanPayAmt = scanPayAmt.add(outputOrderAmt);
+			}else if(payType == PayMethod.CASH_PAY.getValue()) {
+				cashPayAmt = cashPayAmt.add(outputOrderAmt);
+			}else if(payType == PayMethod.COMPANY_TURN_ACCOUNT.getValue()) {
+				companyTurnAccountAmt = companyTurnAccountAmt.add(outputOrderAmt);
+			}
+			
 			outputInstIncomeCountMap.put("instId", inputInstIncomeCountMap.get("instId"));
 			outputInstIncomeCountMap.put("instName", inputInstIncomeCountMap.get("instName"));
 			outputInstIncomeCountMap.put("orderAmt", outputOrderAmt);
 			outputInstIncomeCountMap.put("adjustAmt", inputInstIncomeCountMap.get("adjustAmt"));
+			outputInstIncomeCountMap.put("onlinePayAmt",onlinePayAmt);
+			outputInstIncomeCountMap.put("scanPayAmt",scanPayAmt);
+			outputInstIncomeCountMap.put("cashPayAmt",cashPayAmt);
+			outputInstIncomeCountMap.put("companyTurnAccountAmt",companyTurnAccountAmt);
 			outputInstIncomeCountMap.put("staffSettleAmt", inputInstIncomeCountMap.get("staffSettleAmt"));
 			outputInstIncomeCountMap.put("instSettleAmt", outputInstSettleAmt);
 			outputInstIncomeCountMap.put("pounDage", outputPounDage);

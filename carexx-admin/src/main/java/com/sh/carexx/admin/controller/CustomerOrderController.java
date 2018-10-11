@@ -93,7 +93,9 @@ public class CustomerOrderController extends BaseController {
 
 	@RequestMapping(value = "/income_count")
 	public String queryIncomeCountForList(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
-		customerOrderQueryFormBean.setInstId(this.getCurrentUser().getInstId());
+		if(customerOrderQueryFormBean.getInstId() == null){
+			customerOrderQueryFormBean.setInstId(this.getCurrentUser().getInstId());
+		}
 		return this.ucServiceClient.queryIncomeCountForList(customerOrderQueryFormBean);
 	}
 	@RequestMapping(value = "/inst_income_count")
@@ -200,8 +202,8 @@ public class CustomerOrderController extends BaseController {
 		}
 		List<Map<String, Object>> resultList = (List) dataRetVal.getData();
 		
-		String[] heads = { "机构名称", "订单金额", "调整金额", "结算款", "管理费", "微信手续费" };
-		String[] cols = { "instName", "orderAmt", "adjustAmt", "staffSettleAmt", "instSettleAmt", "pounDage" };
+		String[] heads = { "机构名称", "订单金额", "线上支付", "扫码支付", "现金支付", "公司转账", "调整金额", "结算款", "管理费", "微信手续费" };
+		String[] cols = { "instName", "orderAmt", "onlinePayAmt", "scanPayAmt", "cashPayAmt", "companyTurnAccountAmt", "adjustAmt", "staffSettleAmt", "instSettleAmt", "pounDage" };
 		int[] numColIndexs = {};
 		ExcelExporter<Map<String, Object>> exporter = new ExcelExporter(fileName, heads, cols, resultList,
 				numColIndexs);

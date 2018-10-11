@@ -28,6 +28,11 @@ public class CareInstController extends BaseController {
 	public String queryForList(CareInstFormBean careInstFormBean) {
 		return this.ucServiceClient.queryCareInstForList(careInstFormBean);
 	}
+	
+	@RequestMapping(value = "/all")
+	public String queryForAll(CareInstFormBean careInstFormBean) {
+		return this.ucServiceClient.queryAllCareInst(careInstFormBean);
+	}
 
 	@RequestMapping(value = "/list_service")
 	public String queryServiceForList(CareInstFormBean careInstFormBean) {
