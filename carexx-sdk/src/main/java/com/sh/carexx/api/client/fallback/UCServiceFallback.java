@@ -418,6 +418,11 @@ public class UCServiceFallback implements UCServiceClient {
 	}
 
 	@Override
+	public BasicRetVal deleteCustomerOrder(String orderNo) {
+		return null;
+	}
+	
+	@Override
 	public BasicRetVal throughPayCustomerOrder(String orderNo, Byte payType) {
 		return null;
 	}

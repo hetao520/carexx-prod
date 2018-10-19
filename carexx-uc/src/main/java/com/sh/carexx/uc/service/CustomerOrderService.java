@@ -140,6 +140,18 @@ public interface CustomerOrderService {
 	
 	/**
 	 * 
+	 * updateOrderDelete:(删除订单). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param orderNo
+	 * @param targetStatus
+	 * @throws BizException 
+	 * @since JDK 1.8
+	 */
+	void updateOrderDelete(String orderNo, Byte targetStatus) throws BizException;
+	
+	/**
+	 * 
 	 * queryIncomeCount:(收入统计). <br/> 
 	 * 
 	 * @author zhoulei 

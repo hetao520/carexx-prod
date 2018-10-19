@@ -34,6 +34,19 @@ public interface OrderSettleService {
 	
 	/**
 	 * 
+	 * updateSettleDelete:(取消订单结算). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param scheduleId
+	 * @param srcStatus
+	 * @param targetStatus
+	 * @throws BizException 
+	 * @since JDK 1.8
+	 */
+	void updateSettleDelete(Long scheduleId, Byte targetStatus) throws BizException;
+	
+	/**
+	 * 
 	 * billShutDown:(订单结算批量关闭方法). <br/> 
 	 * 
 	 * @author zhoulei 

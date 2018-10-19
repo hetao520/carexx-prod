@@ -715,6 +715,18 @@ public interface UCServiceClient {
 
 	/**
 	 * 
+	 * DeleteCustomerOrder:(删除订单). <br/> 
+	 * 
+	 * @author zhoulei 
+	 * @param orderNo
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/customerorder/delete/{orderNo}", method = RequestMethod.GET)
+	BasicRetVal deleteCustomerOrder(@PathVariable("orderNo") String orderNo);
+	
+	/**
+	 * 
 	 * confirmCompletedCustomerOrder:(确认订单支付). <br/>
 	 * 
 	 * @author hetao

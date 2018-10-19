@@ -24,6 +24,7 @@ import com.sh.carexx.common.enums.order.OrderStatus;
 import com.sh.carexx.common.enums.order.OrderType;
 import com.sh.carexx.common.enums.order.ProofType;
 import com.sh.carexx.common.enums.order.ServiceAddress;
+import com.sh.carexx.common.enums.pay.PayStatus;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.keygen.KeyGenerator;
 import com.sh.carexx.common.util.DateUtils;
@@ -33,6 +34,7 @@ import com.sh.carexx.model.uc.CustomerOrderSchedule;
 import com.sh.carexx.model.uc.InstCareService;
 import com.sh.carexx.model.uc.InstCustomer;
 import com.sh.carexx.model.uc.InstHoliday;
+import com.sh.carexx.model.uc.OrderSettle;
 import com.sh.carexx.model.uc.UserInfo;
 import com.sh.carexx.uc.service.CustomerOrderScheduleService;
 import com.sh.carexx.uc.service.CustomerOrderService;
@@ -40,6 +42,7 @@ import com.sh.carexx.uc.service.InstCareServiceService;
 import com.sh.carexx.uc.service.InstCustomerService;
 import com.sh.carexx.uc.service.InstHolidayService;
 import com.sh.carexx.uc.service.InstSettleService;
+import com.sh.carexx.uc.service.OrderPaymentService;
 import com.sh.carexx.uc.service.OrderSettleService;
 import com.sh.carexx.uc.service.UserService;
 
@@ -74,6 +77,9 @@ public class CustomerOrderManager {
 	private OrderSettleService orderSettleService;
 	@Autowired
 	private InstSettleService instSettleService;
+	@Autowired
+    private OrderPaymentService orderPaymentService;
+    
 
 	/**
 	 * 
@@ -402,10 +408,37 @@ public class CustomerOrderManager {
 		for (CustomerOrderSchedule list : orderschedulelist) {
 			this.customerOrderScheduleService.deleteOrderSchedule(list.getId(), OrderScheduleStatus.DELETED.getValue());
 			// 取消订单下的排班同时取消所有的订单结算
-			this.orderSettleService.updateStatus(list.getId(), UseStatus.ENABLED.getValue(),
-					UseStatus.DISABLED.getValue());
+			this.orderSettleService.updateStatus(list.getId(), OrderSettleStatus.SETTLING.getValue(),
+            		OrderSettleStatus.CANCELED.getValue());
 		}
 	}
+	
+    /**
+     * 
+     * delete:(删除订单). <br/> 
+     * 
+     * @author zhoulei 
+     * @param orderNo
+     * @throws BizException 
+     * @since JDK 1.8
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = BizException.class)
+    public void delete(String orderNo) throws BizException {
+        this.customerOrderService.updateOrderDelete(orderNo, OrderStatus.CANCELED.getValue());
+        // 通过订单号查询该订单所有的排班
+        List<CustomerOrderSchedule> orderschedulelist = this.customerOrderScheduleService.getByOrderNo(orderNo);
+        for (CustomerOrderSchedule list : orderschedulelist) {
+        	OrderSettle orderSettle = this.orderSettleService.getByScheduleId(list.getId());
+    		if(orderSettle.getSettleStatus() == OrderSettleStatus.CLOSED.getValue()) {
+    			throw new BizException(ErrorCode.ORDER_SETTLE_EXISTS_ERROR);
+    		}
+            this.customerOrderScheduleService.deleteOrderSchedule(list.getId(), OrderScheduleStatus.DELETED.getValue());
+            // 取消订单下的排班同时取消所有的订单结算
+            this.orderSettleService.updateSettleDelete(list.getId(),
+            		OrderSettleStatus.CANCELED.getValue());
+        }
+        this.orderPaymentService.updatePaymentDelete(orderNo, PayStatus.DELETE_PAY.getValue());
+    }
 	/**
 	 * 
 	 * throughPay:(订单支付). <br/> 

@@ -53,7 +53,6 @@
 			order_no = #{orderNo,jdbcType=VARCHAR}
 	</select>
 
-
 	<update id="update" parameterType="com.sh.carexx.model.uc.OrderPayment">
 		update
 			carexx_order_payment
@@ -65,5 +64,14 @@
 			pay_time = now()
 		where
 			order_no = #{orderNo,jdbcType=VARCHAR} and pay_status = 1
+	</update>
+	
+	<update id="updatePaymentDelete">
+		UPDATE
+			carexx_order_payment
+		SET
+			pay_status = #{targetStatus,jdbcType=TINYINT}
+		WHERE
+			order_no = #{orderNo,jdbcType=VARCHAR}
 	</update>
 </mapper>
