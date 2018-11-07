@@ -1,10 +1,5 @@
 package com.sh.carexx.uc.manager;
 
-import java.math.BigDecimal;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sh.carexx.bean.care.CareServiceFormBean;
 import com.sh.carexx.bean.care.InstCareServiceFormBean;
 import com.sh.carexx.common.ErrorCode;
@@ -14,6 +9,10 @@ import com.sh.carexx.model.uc.CareService;
 import com.sh.carexx.model.uc.InstCareService;
 import com.sh.carexx.uc.service.CareServiceService;
 import com.sh.carexx.uc.service.InstCareServiceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 /**
  * 
@@ -121,6 +120,7 @@ public class CareServiceManager {
 		instCareService.setInstId(instCareServiceFormBean.getInstId());
 		instCareService.setServiceId(instCareServiceFormBean.getServiceId());
 		instCareService.setServiceUnit(instCareServiceFormBean.getServiceUnit());
+		instCareService.setServiceAddress(instCareServiceFormBean.getServiceAddress());
 		instCareService.setServicePrice(new BigDecimal(instCareServiceFormBean.getServicePrice()));
 		instCareService.setServiceStatus(UseStatus.ENABLED.getValue());
 		this.instCareServiceService.save(instCareService);
@@ -140,8 +140,10 @@ public class CareServiceManager {
 		if (instCareService != null && instCareService.getId() != instCareServiceFormBean.getId()) {
 			throw new BizException(ErrorCode.INST_CARE_SERVICE_EXISTS_ERROR);
 		}
+		instCareService = new InstCareService();
 		instCareService.setId(instCareServiceFormBean.getId());
 		instCareService.setServiceUnit(instCareServiceFormBean.getServiceUnit());
+		instCareService.setServiceAddress(instCareServiceFormBean.getServiceAddress());
 		instCareService.setServicePrice(new BigDecimal(instCareServiceFormBean.getServicePrice()));
 		this.instCareServiceService.update(instCareService);
 	}
