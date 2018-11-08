@@ -12,6 +12,7 @@ import com.sh.carexx.bean.acl.AclRoleFormBean;
 import com.sh.carexx.bean.care.CareInstFormBean;
 import com.sh.carexx.bean.care.CareInstSysFormBean;
 import com.sh.carexx.bean.care.CareServiceFormBean;
+import com.sh.carexx.bean.care.CareServiceRatioFormBean;
 import com.sh.carexx.bean.care.InstCareServiceFormBean;
 import com.sh.carexx.bean.care.InstInpatientAreaFormBean;
 import com.sh.carexx.bean.care.InstServiceQueryFormBean;
@@ -714,6 +715,36 @@ public class UCServiceFallback implements UCServiceClient {
 
 	@Override
 	public BasicRetVal sendVerifyCode(String mobile) {
+		return null;
+	}
+
+	@Override
+	public BasicRetVal addServiceRatio(CareServiceRatioFormBean careServiceRatioFormBean) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public String queryServiceRatioForList(CareServiceRatioFormBean careServiceRatioFormBean) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public BasicRetVal modifyServiceRatio(CareServiceRatioFormBean careServiceRatioFormBean) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public BasicRetVal enableServiceRatio(Integer id) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public BasicRetVal disableServiceRatio(Integer id) {
+		// TODO 自动生成的方法存根
 		return null;
 	}
 
