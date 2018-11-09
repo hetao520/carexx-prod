@@ -241,6 +241,10 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 								}
 							}
 						}
+						BigDecimal inputServiceCharge = new BigDecimal(
+								String.valueOf(outputInstIncomeCountMap.get("serviceCharge")));
+						BigDecimal outputServiceCharge = new BigDecimal(
+								String.valueOf(inputOrderAmt)).multiply(serviceRatio).add(inputServiceCharge);
 						
 						outputInstIncomeCountMap.put("orderAmt", outputOrderAmt);
 						outputInstIncomeCountMap.put("adjustAmt", outputAdjustAmt);
@@ -251,7 +255,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 						outputInstIncomeCountMap.put("staffSettleAmt", outputStaffSettleAmt);
 						outputInstIncomeCountMap.put("instSettleAmt", outputInstSettleAmt);
 						outputInstIncomeCountMap.put("pounDage", outputPounDage);
-						outputInstIncomeCountMap.put("serviceCharge", outputOrderAmt.multiply(serviceRatio));
+						outputInstIncomeCountMap.put("serviceCharge", outputServiceCharge);
 						outputInstIncomeCountList.set(index, outputInstIncomeCountMap);
 
 						bool = true;
@@ -304,6 +308,9 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 					}
 				}
 			}
+			BigDecimal outputServiceCharge = new BigDecimal(
+					String.valueOf(outputOrderAmt)).multiply(serviceRatio);
+			
 			
 			outputInstIncomeCountMap.put("instId", inputInstIncomeCountMap.get("instId"));
 			outputInstIncomeCountMap.put("instName", inputInstIncomeCountMap.get("instName"));
@@ -316,7 +323,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 			outputInstIncomeCountMap.put("staffSettleAmt", inputInstIncomeCountMap.get("staffSettleAmt"));
 			outputInstIncomeCountMap.put("instSettleAmt", outputInstSettleAmt);
 			outputInstIncomeCountMap.put("pounDage", outputPounDage);
-			outputInstIncomeCountMap.put("serviceCharge", outputOrderAmt.multiply(serviceRatio));
+			outputInstIncomeCountMap.put("serviceCharge", outputServiceCharge);
 			outputInstIncomeCountList.add(outputInstIncomeCountMap);
 		}
 		return outputInstIncomeCountList;
