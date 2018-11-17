@@ -24,6 +24,7 @@ import com.sh.carexx.common.enums.order.OrderStatus;
 import com.sh.carexx.common.enums.order.OrderType;
 import com.sh.carexx.common.enums.order.ProofType;
 import com.sh.carexx.common.enums.order.ServiceAddress;
+import com.sh.carexx.common.enums.pay.PayMethod;
 import com.sh.carexx.common.enums.pay.PayStatus;
 import com.sh.carexx.common.exception.BizException;
 import com.sh.carexx.common.keygen.KeyGenerator;
@@ -519,7 +520,17 @@ public class CustomerOrderManager {
 			customerOrder.setInvoiceNo(customerOrderAdjustFormBean.getProofNo());
 			customerOrder.setReceiptNo("");
 		}
+		customerOrder.setOrderRemark(customerOrderAdjustFormBean.getOrderRemark());
 		this.customerOrderService.update(customerOrder);
+
+		if (customerOrderAdjustFormBean.getOrderType() == OrderType.ONLINE_ORDER.getValue()) {
+			throw new BizException(ErrorCode.ONLINE_ORDER_NOT_MODIFY);
+		}
+		if (customerOrderAdjustFormBean.getPayType() == PayMethod.ONLINE_PAY.getValue()) {
+			throw new BizException(ErrorCode.PAYMETHOD_NOT_ONLINE_PAY);
+		}
+		this.orderPaymentService.updatePayType(customerOrderAdjustFormBean.getOrderNo(),
+				customerOrderAdjustFormBean.getPayType());
 	}
 
 }

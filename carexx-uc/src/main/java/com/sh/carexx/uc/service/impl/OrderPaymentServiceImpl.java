@@ -65,4 +65,13 @@ public class OrderPaymentServiceImpl implements OrderPaymentService {
 		return this.orderPaymentMapper.selectByOrderNo(orderNo);
 	}
 
+	@Override
+	public void updatePayType(String orderNo, Byte payType) throws BizException {
+		try {
+			this.orderPaymentMapper.updatePayType(orderNo, payType);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+	}
+
 }
