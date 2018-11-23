@@ -28,6 +28,8 @@ import com.sh.carexx.bean.order.CustomerOrderAdjustFormBean;
 import com.sh.carexx.bean.order.CustomerOrderFormBean;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
+import com.sh.carexx.bean.order.CustomerOrderTimeFormBean;
+import com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean;
 import com.sh.carexx.bean.order.InstSettleQueryFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
 import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
@@ -745,6 +747,26 @@ public class UCServiceFallback implements UCServiceClient {
 	@Override
 	public BasicRetVal disableServiceRatio(Integer id) {
 		// TODO 自动生成的方法存根
+		return null;
+	}
+	
+	@Override
+	public String getCustomerordertimeByInstId(Integer instId) {
+		return null;
+	}
+
+	@Override
+	public BasicRetVal addCustomerordertime(CustomerOrderTimeFormBean customerOrderTimeFormBean) {
+		return null;
+	}
+
+	@Override
+	public BasicRetVal modifyCustomerordertime(CustomerOrderTimeFormBean customerOrderTimeFormBean) {
+		return null;
+	}
+
+	@Override
+	public String queryCustomerOrderTimeForList(CustomerOrderTimeQueryFormBean customerOrderTimeQueryFormBean) {
 		return null;
 	}
 

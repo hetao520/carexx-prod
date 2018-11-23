@@ -55,7 +55,6 @@ public enum ErrorCode {
 	ONLINE_ORDER_NOT_MODIFY ("E090907", "线上订单不可修改"),
 	PAYMETHOD_NOT_ONLINE_PAY ("E090908", "支付方式不能为线上支付"),
 	
-	
 	ORDER_PAYMENT_EXISTS_ERROR("E091001", "该订单支付已存在"),
 	
 	INST_SYS_EXISTS_ERROR("E091101", "公司信息已存在"),
@@ -69,6 +68,8 @@ public enum ErrorCode {
 	INST_INPATIENT_AREA_EXISTS_ERROR("E091401", "当前病区已存在"),
 	
 	CARE_SERVICE_RATIO_EXISTS_ERROR("E091501", "服务比例已存在"),
+
+	INST_JOB_TYPE_EXISTS_ERROR("E091601", "该班次已存在"),
 	;
 
 	private String value;

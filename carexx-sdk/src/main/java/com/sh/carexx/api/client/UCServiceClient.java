@@ -35,6 +35,8 @@ import com.sh.carexx.bean.order.CustomerOrderAdjustFormBean;
 import com.sh.carexx.bean.order.CustomerOrderFormBean;
 import com.sh.carexx.bean.order.CustomerOrderQueryFormBean;
 import com.sh.carexx.bean.order.CustomerOrderScheduleFormBean;
+import com.sh.carexx.bean.order.CustomerOrderTimeFormBean;
+import com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean;
 import com.sh.carexx.bean.order.InstSettleQueryFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
 import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
@@ -1423,4 +1425,16 @@ public interface UCServiceClient {
 
 	@RequestMapping(value = "/serviceratio/disable/{id}", method = RequestMethod.GET)
 	BasicRetVal disableServiceRatio(@PathVariable("id") Integer id);
+	
+	@RequestMapping(value = "/customerordertime/get_by_instId/{instId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String getCustomerordertimeByInstId(@PathVariable("instId") Integer instId);
+
+	@RequestMapping(value = "/customerordertime/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal addCustomerordertime(@RequestBody CustomerOrderTimeFormBean customerOrderTimeFormBean);
+
+	@RequestMapping(value = "/customerordertime/modify", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	BasicRetVal modifyCustomerordertime(@RequestBody CustomerOrderTimeFormBean customerOrderTimeFormBean);
+
+	@RequestMapping(value = "/customerordertime/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryCustomerOrderTimeForList(@RequestBody CustomerOrderTimeQueryFormBean customerOrderTimeQueryFormBean);
 }
