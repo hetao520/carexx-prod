@@ -59,6 +59,7 @@
     <select id="selectCustomerOrderTimeList" parameterType="com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean" resultType="java.util.Map">
       SELECT
           cot.id id,
+          cot.inst_id instId,
           ci.inst_name instName,
           cot.job_type jobType,
           cot.start_time startTime,

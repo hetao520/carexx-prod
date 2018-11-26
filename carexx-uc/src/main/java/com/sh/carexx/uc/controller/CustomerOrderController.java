@@ -66,7 +66,7 @@ public class CustomerOrderController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
-	
+
 	@RequestMapping(value = "/addappointorder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public BasicRetVal addAppointOrder(@RequestBody CustomerAppointOrderFormBean customerAppointOrderFormBean) {
 		try {
@@ -83,6 +83,20 @@ public class CustomerOrderController {
 		List<Map<?, ?>> result = null;
 		if (totalNum > 0) {
 			result = this.customerOrderService.queryCustomerOrderList(customerOrderQueryFormBean);
+		}
+		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, result)).toJSON();
+	}
+
+	@RequestMapping(value = "/list_by_worktypeid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public String queryForListByWorkTypeId(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		if (customerOrderQueryFormBean.getServiceStartTime() == null || customerOrderQueryFormBean.getJobType() == null
+				|| customerOrderQueryFormBean.getWorkTypeId() == null) {
+			return new DataRetVal(CarexxConstant.RetCode.INVALID_INPUT, null).toJSON();
+		}
+		Integer totalNum = this.customerOrderService.getByWorkTypeIdCount(customerOrderQueryFormBean);
+		List<Map<?, ?>> result = null;
+		if (totalNum > 0) {
+			result = this.customerOrderService.queryByWorkTypeIdList(customerOrderQueryFormBean);
 		}
 		return new DataRetVal(CarexxConstant.RetCode.SUCCESS, new PagerBean(totalNum, result)).toJSON();
 	}
@@ -111,7 +125,7 @@ public class CustomerOrderController {
 	public OrderPayment getOrderPayment(@PathVariable("orderNo") String orderNo) {
 		return this.orderPaymentService.getByOrderNo(orderNo);
 	}
-	
+
 	@RequestMapping(value = "/inst_income_count", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String queryInstIncomeCountForList(@RequestBody CustomerOrderQueryFormBean CustomerOrderQueryFormBean) {
 		List<Map<String, Object>> result = this.customerOrderService.queryInstIncomeCount(CustomerOrderQueryFormBean);
@@ -127,7 +141,7 @@ public class CustomerOrderController {
 		}
 		return new BasicRetVal(CarexxConstant.RetCode.SUCCESS);
 	}
-	
+
 	@RequestMapping(value = "/delete/{orderNo}", method = RequestMethod.GET)
 	public BasicRetVal delete(@PathVariable("orderNo") String orderNo) {
 		try {

@@ -694,6 +694,18 @@ public interface UCServiceClient {
 
 	/**
 	 * 
+	 * queryCustomerOrderForListByWorkTypeId:(通过工种查询订单). <br/>
+	 * 
+	 * @author zhoulei
+	 * @param CustomerOrderQueryFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/customerorder/list_by_worktypeid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	String queryCustomerOrderForListByWorkTypeId(@RequestBody CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	
+	/**
+	 * 
 	 * queryCustomerOrderListByUserId:(移动端通过客户id查询客户预约服务订单). <br/>
 	 * 
 	 * @author hetao
@@ -1426,15 +1438,51 @@ public interface UCServiceClient {
 	@RequestMapping(value = "/serviceratio/disable/{id}", method = RequestMethod.GET)
 	BasicRetVal disableServiceRatio(@PathVariable("id") Integer id);
 	
+	/**
+	 *
+	 * getCustomerordertimeByInstId:(通过机构id查询机构班次). <br/>
+	 *
+	 * @author hetao
+	 * @param instId
+	 * @return
+	 * @since JDK 1.8
+	 */
 	@RequestMapping(value = "/customerordertime/get_by_instId/{instId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String getCustomerordertimeByInstId(@PathVariable("instId") Integer instId);
 
+	/**
+	 *
+	 * addCustomerordertime:(新增机构班次). <br/>
+	 *
+	 * @author hetao
+	 * @param customerOrderTimeFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
 	@RequestMapping(value = "/customerordertime/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal addCustomerordertime(@RequestBody CustomerOrderTimeFormBean customerOrderTimeFormBean);
 
+	/**
+	 *
+	 * modifyCustomerordertime:(修改机构班次). <br/>
+	 *
+	 * @author hetao
+	 * @param customerOrderTimeFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
 	@RequestMapping(value = "/customerordertime/modify", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	BasicRetVal modifyCustomerordertime(@RequestBody CustomerOrderTimeFormBean customerOrderTimeFormBean);
 
+	/**
+	 *
+	 * queryCustomerOrderTimeForList:(机构班次分页查询). <br/>
+	 *
+	 * @author hetao
+	 * @param customerOrderTimeQueryFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
 	@RequestMapping(value = "/customerordertime/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryCustomerOrderTimeForList(@RequestBody CustomerOrderTimeQueryFormBean customerOrderTimeQueryFormBean);
 }

@@ -80,6 +80,28 @@ public interface CustomerOrderService {
 	 * @since JDK 1.8
 	 */
 	List<Map<?, ?>> queryCustomerOrderList(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+	
+	/**
+	 * 
+	 * getByWorkTypeIdCount:(通过工种ID统计). <br/>
+	 * 
+	 * @author zhoulei
+	 * @param customerOrderQueryFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	Integer getByWorkTypeIdCount(CustomerOrderQueryFormBean customerOrderQueryFormBean);
+
+	/**
+	 * 
+	 * queryByWorkTypeIdList:(通过工种ID查询). <br/>
+	 * 
+	 * @author zhoulei
+	 * @param customerOrderQueryFormBean
+	 * @return
+	 * @since JDK 1.8
+	 */
+	List<Map<?, ?>> queryByWorkTypeIdList(CustomerOrderQueryFormBean customerOrderQueryFormBean);
 
 	/**
 	 * 

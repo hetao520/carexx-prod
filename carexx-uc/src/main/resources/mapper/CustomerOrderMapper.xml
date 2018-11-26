@@ -234,6 +234,57 @@
 		LIMIT ${rowIndex}, ${pageSize}
 	</select>
 
+	<select id="selectByWorkTypeIdCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.lang.Integer">
+		SELECT
+			count(1) totalCount
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		WHERE
+			cs.work_type_id = #{workTypeId,jdbcType=INTEGER}
+			AND co.order_status = 1 AND co.service_address = 1
+			AND co.service_start_time <![CDATA[<=]]> #{serviceStartTime}
+			AND co.service_end_time >= #{serviceEndTime}
+			<if test="instId != null and instId > 0">
+				AND co.inst_id = #{instId,jdbcType=INTEGER}
+			</if>
+			<if test="realName != null and realName != '' ">
+				AND ic.real_name LIKE CONCAT('%', '', '%')
+			</if>
+			<if test="orderNo != null and orderNo != '' ">
+				AND co.order_no LIKE CONCAT('%', '')
+			</if>
+	</select>
+	<select id="selectByWorkTypeIdList" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
+		SELECT
+			co.order_no orderNo,
+			co.order_amt orderAmt,
+			co.adjust_amt adjustAmt,
+			ic.real_name realName,
+			cs.id serviceId,
+			cs.service_name serviceName,
+			co.service_start_time serviceStartTime,
+			co.service_end_time serviceEndTime
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		WHERE
+			cs.work_type_id = #{workTypeId,jdbcType=INTEGER}
+			AND co.order_status = 1 AND co.service_address = 1
+			AND co.service_start_time <![CDATA[<=]]> #{serviceStartTime}
+			AND co.service_end_time >= #{serviceEndTime}
+			<if test="instId != null and instId > 0">
+				AND co.inst_id = #{instId,jdbcType=INTEGER}
+			</if>
+			<if test="realName != null and realName != '' ">
+				AND ic.real_name LIKE CONCAT('%', '', '%')
+			</if>
+			<if test="orderNo != null and orderNo != '' ">
+				AND co.order_no LIKE CONCAT('%', '')
+			</if>
+	</select>
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrder">
 		INSERT INTO carexx_customer_order (
 			order_type, service_address, user_id, customer_id, phone, inst_id,

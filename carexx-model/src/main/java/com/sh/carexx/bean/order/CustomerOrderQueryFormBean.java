@@ -53,6 +53,8 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 
 	private String signingPerson;
 
+	private String jobType;
+	
 	public Integer getInstId() {
 		return instId;
 	}
@@ -267,4 +269,16 @@ public class CustomerOrderQueryFormBean extends BasicFormBean {
 		this.signingPerson = signingPerson;
 	}
 
+	public Byte getJobType() {
+		if (ValidUtils.isInteger(jobType)) {
+			return Byte.parseByte(jobType);
+		}
+		return null;
+	}
+
+	public void setJobType(String jobType) {
+		this.jobType = jobType;
+	}
+
+	
 }

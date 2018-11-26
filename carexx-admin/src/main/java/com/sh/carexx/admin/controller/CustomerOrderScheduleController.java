@@ -26,15 +26,17 @@ public class CustomerOrderScheduleController extends BaseController {
 	@RequestMapping("/add")
 	public BasicRetVal add(@Valid CustomerOrderScheduleFormBean customerOrderScheduleFormBean,
 			BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors() || (customerOrderScheduleFormBean.getServiceEndTime() == null
+				&& customerOrderScheduleFormBean.getJobType() == null)) {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
+		customerOrderScheduleFormBean.setInstId(this.getCurrentUser().getInstId());
 		return this.ucServiceClient.addCustomerOrderSchedule(customerOrderScheduleFormBean);
 	}
 
 	@RequestMapping("/add_outSend")
 	public BasicRetVal addOutSend(@Valid CustomerOrderScheduleFormBean customerOrderScheduleFormBean,
-						   BindingResult bindingResult) {
+			BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return new BasicRetVal(CarexxConstant.RetCode.INVALID_INPUT);
 		}
