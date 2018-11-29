@@ -65,6 +65,12 @@ public class CustomerOrderController extends BaseController {
 		customerOrderQueryFormBean.setInstId(this.getCurrentUser().getInstId());
 		return this.ucServiceClient.queryCustomerOrderForListByWorkTypeId(customerOrderQueryFormBean);
 	}
+	
+	@RequestMapping(value = "/staffschedule_list")
+	public String queryStaffScheduleForList(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		customerOrderQueryFormBean.setInstId(this.getCurrentUser().getInstId());
+		return this.ucServiceClient.queryCustomerOrderForListStaffSchedule(customerOrderQueryFormBean);
+	}
 
 	@RequestMapping(value = "/cancel/{orderNo}")
 	public BasicRetVal cancel(@PathVariable("orderNo") String orderNo) {

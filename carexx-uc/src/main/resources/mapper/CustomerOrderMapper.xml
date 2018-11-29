@@ -255,6 +255,28 @@
 			<if test="orderNo != null and orderNo != '' ">
 				AND co.order_no LIKE CONCAT('%', '')
 			</if>
+			AND co.order_no NOT IN (
+				SELECT
+					co.order_no orderNo
+				FROM
+					carexx_customer_order co
+				LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+				LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+				WHERE
+					cs.work_type_id = #{workTypeId,jdbcType=INTEGER}
+					AND co.order_status = 1 AND co.service_address = 1
+					AND (
+						cos.service_start_time <![CDATA[<=]]> #{serviceStartTime}
+						AND cos.service_end_time >= #{serviceEndTime}
+					)
+					OR (
+						cos.service_start_time >= #{serviceStartTime}
+						AND cos.service_end_time <![CDATA[<=]]> #{serviceEndTime}
+					)
+					<if test="instId != null and instId > 0">
+						AND co.inst_id = #{instId,jdbcType=INTEGER}
+					</if>
+			)
 	</select>
 	<select id="selectByWorkTypeIdList" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
 		SELECT
@@ -284,6 +306,77 @@
 			<if test="orderNo != null and orderNo != '' ">
 				AND co.order_no LIKE CONCAT('%', '')
 			</if>
+			AND co.order_no NOT IN (
+				SELECT
+					co.order_no orderNo
+				FROM
+					carexx_customer_order co
+				LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+				LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+				WHERE
+					cs.work_type_id = #{workTypeId,jdbcType=INTEGER}
+					AND co.order_status = 1 AND co.service_address = 1
+					AND (
+						cos.service_start_time <![CDATA[<=]]> #{serviceStartTime}
+						AND cos.service_end_time >= #{serviceEndTime}
+					)
+					OR (
+						cos.service_start_time >= #{serviceStartTime}
+						AND cos.service_end_time <![CDATA[<=]]> #{serviceEndTime}
+					)
+					<if test="instId != null and instId > 0">
+						AND co.inst_id = #{instId,jdbcType=INTEGER}
+					</if>
+			)
+	</select>
+	<select id="selectStaffScheduleCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.lang.Integer">
+		SELECT
+			count(1) totalCount
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+		WHERE
+			cos.service_staff_id = #{staffId,jdbcType=INTEGER}
+		AND co.service_address = 1
+		<if test="instId != null and instId > 0">
+			AND co.inst_id = #{instId,jdbcType=INTEGER}
+		</if>
+		<if test="serviceStartTime != null and serviceStartTime != '' ">
+			AND DATE_FORMAT(cos.service_start_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[<=]]> DATE_FORMAT(#{serviceStartTime},<![CDATA['%Y-%m-%d']]>)
+		</if>
+		<if test="serviceEndTime != null and serviceEndTime != '' ">
+			AND DATE_FORMAT(cos.service_start_time ,<![CDATA['%Y-%m-%d']]>) >= DATE_FORMAT(#{serviceEndTime},<![CDATA['%Y-%m-%d']]>)
+		</if>
+	</select>
+	<select id="selectStaffScheduleList" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.util.Map">
+		SELECT
+			co.order_no orderNo,
+			co.order_amt orderAmt,
+			co.adjust_amt adjustAmt,
+			ic.real_name realName,
+			cs.id serviceId,
+			cs.service_name serviceName,
+			co.service_start_time serviceStartTime,
+			co.service_end_time serviceEndTime
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+		WHERE
+			cos.service_staff_id = #{staffId,jdbcType=INTEGER}
+		AND co.service_address = 1
+		<if test="instId != null and instId > 0">
+			AND co.inst_id = #{instId,jdbcType=INTEGER}
+		</if>
+		<if test="serviceStartTime != null and serviceStartTime != '' ">
+			AND DATE_FORMAT(cos.service_start_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[<=]]> DATE_FORMAT(#{serviceStartTime},<![CDATA['%Y-%m-%d']]>)
+		</if>
+		<if test="serviceEndTime != null and serviceEndTime != '' ">
+			AND DATE_FORMAT(cos.service_start_time ,<![CDATA['%Y-%m-%d']]>) >= DATE_FORMAT(#{serviceEndTime},<![CDATA['%Y-%m-%d']]>)
+		</if>
 	</select>
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrder">
 		INSERT INTO carexx_customer_order (

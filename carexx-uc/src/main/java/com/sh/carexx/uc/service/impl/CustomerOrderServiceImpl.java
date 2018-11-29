@@ -148,7 +148,8 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 			
 			if (ValidUtils.isDate(customerOrderQueryFormBean.getServiceEndTime())
 					|| customerOrderQueryFormBean.getServiceEndTime() == null) {
-				customerOrderQueryFormBean.setServiceEndTime(format.format(calendar.getTime() + " " + endTime));
+				customerOrderQueryFormBean.setServiceEndTime(format.format(calendar.getTime()));
+				customerOrderQueryFormBean.setServiceEndTime(customerOrderQueryFormBean.getServiceEndTime() + " " + endTime);
 			}
 		} else {
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -229,7 +230,8 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 			
 			if (ValidUtils.isDate(customerOrderQueryFormBean.getServiceEndTime())
 					|| customerOrderQueryFormBean.getServiceEndTime() == null) {
-				customerOrderQueryFormBean.setServiceEndTime(format.format(calendar.getTime() + " " + endTime));
+				customerOrderQueryFormBean.setServiceEndTime(format.format(calendar.getTime()));
+				customerOrderQueryFormBean.setServiceEndTime(customerOrderQueryFormBean.getServiceEndTime() + " " + endTime);
 			}
 		} else {
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -265,6 +267,15 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 		return this.customerOrderMapper.selectByWorkTypeIdList(customerOrderQueryFormBean);
 	}
 
+	@Override
+	public Integer getStaffScheduleCount(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		return this.customerOrderMapper.selectStaffScheduleCount(customerOrderQueryFormBean);
+	}
+
+	@Override
+	public List<Map<?, ?>> queryStaffScheduleList(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		return this.customerOrderMapper.selectStaffScheduleList(customerOrderQueryFormBean);
+	}
 	@Override
 	public CustomerOrder getByOrderNo(String orderNo) {
 		return this.customerOrderMapper.selectByOrderNo(orderNo);
