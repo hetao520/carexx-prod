@@ -93,7 +93,7 @@ public interface InstStaffService {
 	 * @return
 	 * @since JDK 1.8
 	 */
-	List<Map<?, ?>> queryInstStaffList(InstStaffQueryFormBean instStaffQueryFormBean);
+	List<Map<String, Object>> queryInstStaffList(InstStaffQueryFormBean instStaffQueryFormBean);
 
 	/**
 	 * 

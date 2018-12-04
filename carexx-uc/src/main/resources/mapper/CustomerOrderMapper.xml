@@ -250,10 +250,10 @@
 				AND co.inst_id = #{instId,jdbcType=INTEGER}
 			</if>
 			<if test="realName != null and realName != '' ">
-				AND ic.real_name LIKE CONCAT('%', '', '%')
+				AND ic.real_name LIKE CONCAT('%', '${realName}', '%')
 			</if>
 			<if test="orderNo != null and orderNo != '' ">
-				AND co.order_no LIKE CONCAT('%', '')
+				AND co.order_no LIKE CONCAT('%', '${orderNo}')
 			</if>
 			AND co.order_no NOT IN (
 				SELECT
@@ -301,10 +301,10 @@
 				AND co.inst_id = #{instId,jdbcType=INTEGER}
 			</if>
 			<if test="realName != null and realName != '' ">
-				AND ic.real_name LIKE CONCAT('%', '', '%')
+				AND ic.real_name LIKE CONCAT('%', '${realName}', '%')
 			</if>
 			<if test="orderNo != null and orderNo != '' ">
-				AND co.order_no LIKE CONCAT('%', '')
+				AND co.order_no LIKE CONCAT('%', '${orderNo}')
 			</if>
 			AND co.order_no NOT IN (
 				SELECT
@@ -328,6 +328,9 @@
 						AND co.inst_id = #{instId,jdbcType=INTEGER}
 					</if>
 			)
+		ORDER BY
+		co.create_time DESC
+		LIMIT ${rowIndex}, ${pageSize}
 	</select>
 	<select id="selectStaffScheduleCount" parameterType="com.sh.carexx.bean.order.CustomerOrderQueryFormBean" resultType="java.lang.Integer">
 		SELECT
@@ -339,7 +342,7 @@
 		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
 		WHERE
 			cos.service_staff_id = #{staffId,jdbcType=INTEGER}
-		AND co.service_address = 1
+			AND co.order_status in (1,3) AND co.service_address = 1
 		<if test="instId != null and instId > 0">
 			AND co.inst_id = #{instId,jdbcType=INTEGER}
 		</if>
@@ -358,16 +361,18 @@
 			ic.real_name realName,
 			cs.id serviceId,
 			cs.service_name serviceName,
-			co.service_start_time serviceStartTime,
-			co.service_end_time serviceEndTime
+			os.staff_settle_amt staffSettleAmt,
+			cos.service_start_time serviceStartTime,
+			cos.service_end_time serviceEndTime
 		FROM
 			carexx_customer_order co
 		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
 		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
 		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+		LEFT JOIN carexx_order_settle os ON cos.id = os.schedule_id
 		WHERE
 			cos.service_staff_id = #{staffId,jdbcType=INTEGER}
-		AND co.service_address = 1
+			AND co.order_status in (1,3) AND co.service_address = 1
 		<if test="instId != null and instId > 0">
 			AND co.inst_id = #{instId,jdbcType=INTEGER}
 		</if>
@@ -377,6 +382,21 @@
 		<if test="serviceEndTime != null and serviceEndTime != '' ">
 			AND DATE_FORMAT(cos.service_start_time ,<![CDATA['%Y-%m-%d']]>) >= DATE_FORMAT(#{serviceEndTime},<![CDATA['%Y-%m-%d']]>)
 		</if>
+		ORDER BY
+		co.order_no DESC
+		LIMIT ${rowIndex}, ${pageSize}
+	</select>
+	<select id="selectOrderCountByStaffId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT
+			count(DISTINCT cos.order_no) totalCount
+		FROM
+			carexx_customer_order co
+		LEFT JOIN carexx_care_service cs ON co.service_id = cs.id
+		LEFT JOIN carexx_inst_customer ic ON co.customer_id = ic.id
+		LEFT JOIN carexx_customer_order_schedule cos ON co.order_no = cos.order_no
+		WHERE
+			cos.service_staff_id = #{staffId,jdbcType=INTEGER}
+			AND co.order_status in (1,3) AND co.service_address = 1
 	</select>
 	<insert id="insert" parameterType="com.sh.carexx.model.uc.CustomerOrder">
 		INSERT INTO carexx_customer_order (
@@ -493,10 +513,10 @@
 				and co.inst_id = #{instId,jdbcType=INTEGER}
 			</if>
 			<if test="serviceStartTime != null and serviceStartTime != '' ">
-				and DATE_FORMAT(co.service_end_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[>=]]> DATE_FORMAT(#{serviceStartTime},<![CDATA['%Y-%m-%d']]>)
+				and co.service_end_time <![CDATA[>=]]> #{serviceStartTime}
 			</if>
 			<if test="serviceEndTime != null and serviceEndTime != '' ">
-				and DATE_FORMAT(co.service_end_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[<=]]> DATE_FORMAT(#{serviceEndTime},<![CDATA['%Y-%m-%d']]>)
+				and co.service_end_time <![CDATA[<=]]> #{serviceEndTime}
 			</if>
 			<if test="proofType != null and proofType != '' ">
 				and co.proof_type = #{proofType,jdbcType=TINYINT}
@@ -593,10 +613,10 @@
 			and co.service_id = #{serviceId,jdbcType=TINYINT}
 		</if>
 		<if test="serviceStartTime != null and serviceStartTime != '' ">
-			and DATE_FORMAT(co.service_end_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[>=]]> DATE_FORMAT(#{serviceStartTime},<![CDATA['%Y-%m-%d']]>)
+			and co.service_end_time  <![CDATA[>=]]> #{serviceStartTime}
 		</if>
 		<if test="serviceEndTime != null and serviceEndTime != '' ">
-			and DATE_FORMAT(co.service_end_time ,<![CDATA['%Y-%m-%d']]>) <![CDATA[<=]]> DATE_FORMAT(#{serviceEndTime},<![CDATA['%Y-%m-%d']]>)
+			and co.service_end_time <![CDATA[<=]]> #{serviceEndTime}
 		</if>
 		</where>
 		GROUP BY co.order_no

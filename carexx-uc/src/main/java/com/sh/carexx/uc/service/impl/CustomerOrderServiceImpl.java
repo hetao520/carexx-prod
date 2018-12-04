@@ -328,6 +328,14 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 
 	@Override
 	public List<Map<String, Object>> queryIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		if (ValidUtils.isDate(customerOrderQueryFormBean.getServiceStartTime())) {
+			customerOrderQueryFormBean.setServiceStartTime(
+					customerOrderQueryFormBean.getServiceStartTime() + CarexxConstant.Datetime.DAY_BEGIN_SUFFIX);
+		}
+		if (ValidUtils.isDate(customerOrderQueryFormBean.getServiceEndTime())) {
+			customerOrderQueryFormBean.setServiceEndTime(
+					customerOrderQueryFormBean.getServiceEndTime() + CarexxConstant.Datetime.DAY_END_SUFFIX);
+		}
 		List<Map<String, Object>> incomeCount = this.customerOrderMapper.selectIncomeCount(customerOrderQueryFormBean);
 		for (Map<String, Object> map : incomeCount) {
 			BigDecimal orderAmt = new BigDecimal(String.valueOf(map.get("orderAmt")));
@@ -346,6 +354,14 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 
 	@Override
 	public List<Map<String, Object>> queryInstIncomeCount(CustomerOrderQueryFormBean customerOrderQueryFormBean) {
+		if (ValidUtils.isDate(customerOrderQueryFormBean.getServiceStartTime())) {
+			customerOrderQueryFormBean.setServiceStartTime(
+					customerOrderQueryFormBean.getServiceStartTime() + CarexxConstant.Datetime.DAY_BEGIN_SUFFIX);
+		}
+		if (ValidUtils.isDate(customerOrderQueryFormBean.getServiceEndTime())) {
+			customerOrderQueryFormBean.setServiceEndTime(
+					customerOrderQueryFormBean.getServiceEndTime() + CarexxConstant.Datetime.DAY_END_SUFFIX);
+		}
 		List<Map<String, Object>> inputInstIncomeCountList = this.customerOrderMapper
 				.selectInstIncomeCount(customerOrderQueryFormBean);
 		List<Map<String, Object>> outputInstIncomeCountList = new ArrayList<Map<String, Object>>();
