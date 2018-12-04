@@ -57,6 +57,8 @@ public class InstStaffManager {
 		instStaff.setStaffStatus(StaffStatus.NORMAL.getValue());
 		instStaff.setRealName(instStaffFormBean.getRealName());
 		instStaff.setIdNo(instStaffFormBean.getIdNo());
+		instStaff.setWorkLicense(instStaffFormBean.getWorkLicense());
+		instStaff.setHealthyLicense(instStaffFormBean.getHealthyLicense());
 		instStaff.setSex(instStaffFormBean.getSex());
 		instStaff.setPhoto(instStaffFormBean.getPhoto());
 		if (ValidUtils.isDate(instStaffFormBean.getBirthday())) {
@@ -103,6 +105,8 @@ public class InstStaffManager {
 		instStaff.setJobStatus(instStaffFormBean.getJobStatus());
 		instStaff.setRealName(instStaffFormBean.getRealName());
 		instStaff.setIdNo(instStaffFormBean.getIdNo());
+		instStaff.setWorkLicense(instStaffFormBean.getWorkLicense());
+		instStaff.setHealthyLicense(instStaffFormBean.getHealthyLicense());
 		instStaff.setSex(instStaffFormBean.getSex());
 		instStaff.setPhoto(instStaffFormBean.getPhoto());
 		if (ValidUtils.isDate(instStaffFormBean.getBirthday())) {
