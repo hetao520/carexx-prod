@@ -19,6 +19,8 @@ public interface AclUserAcctService {
 	List<Map<String, Object>> queryAclUserList(AclRegFormBean aclRegFormBean);
 
 	void updateStatus(Integer id, Byte srcStatus, Byte targetStatus) throws BizException;
+	
+	void delete(Integer id) throws BizException;
 
 	void update(AclUserAcct aclUserAcct) throws BizException;
 }

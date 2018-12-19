@@ -116,8 +116,7 @@ public class AclUserManager {
 	}
 
 	public void delete(Integer id) throws BizException {
-		this.aclUserAcctService.updateStatus(id, AclUserAcctStatus.LOCKED.getValue(),
-				AclUserAcctStatus.CANCELED.getValue());
+		this.aclUserAcctService.delete(id);
 	}
 
 	private void check(AclUserAcct aclUserAcct) throws BizException {

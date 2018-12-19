@@ -63,6 +63,19 @@ public class AclUserAcctServiceImpl implements AclUserAcctService {
 			throw new BizException(ErrorCode.DB_ERROR);
 		}
 	}
+	
+	@Override
+	public void delete(Integer id) throws BizException{
+		int rows = 0;
+		try {
+			rows = this.aclUserAcctMapper.delete(id);
+		} catch (Exception e) {
+			throw new BizException(ErrorCode.DB_ERROR, e);
+		}
+		if (rows != 1) {
+			throw new BizException(ErrorCode.DB_ERROR);
+		}
+	}
 
 	@Override
 	public void update(AclUserAcct aclUserAcct) throws BizException {
