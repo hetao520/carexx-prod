@@ -26,8 +26,13 @@ public class CustomerOrderTimeController {
     @Autowired
     private CustomerOrderTimeService customerOrderTimeService;
 
-    @RequestMapping(value = "/get_by_instId/{instId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/get_by_instId/{instId}", method = RequestMethod.GET)
     public String getByInstId(@PathVariable("instId") Integer instId) {
+        return new DataRetVal(CarexxConstant.RetCode.SUCCESS,this.customerOrderTimeService.getByInstId(instId)).toJSON();
+    }
+
+    @RequestMapping(value = "/by_instId/{instId}", method = RequestMethod.GET)
+    public String queryByInstId(@PathVariable("instId") Integer instId) {
         return new DataRetVal(CarexxConstant.RetCode.SUCCESS,this.customerOrderTimeService.getByInstId(instId)).toJSON();
     }
 

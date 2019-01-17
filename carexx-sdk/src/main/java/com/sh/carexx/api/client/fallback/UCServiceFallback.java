@@ -764,6 +764,11 @@ public class UCServiceFallback implements UCServiceClient {
 	public String getCustomerordertimeByInstId(Integer instId) {
 		return null;
 	}
+	
+	@Override
+	public String queryCustomerordertimeByInstId(Integer instId) {
+		return null;
+	}
 
 	@Override
 	public BasicRetVal addCustomerordertime(CustomerOrderTimeFormBean customerOrderTimeFormBean) {
@@ -779,5 +784,4 @@ public class UCServiceFallback implements UCServiceClient {
 	public String queryCustomerOrderTimeForList(CustomerOrderTimeQueryFormBean customerOrderTimeQueryFormBean) {
 		return null;
 	}
-
 }
