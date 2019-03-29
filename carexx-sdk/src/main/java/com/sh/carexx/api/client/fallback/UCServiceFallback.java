@@ -33,6 +33,7 @@ import com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean;
 import com.sh.carexx.bean.order.InstSettleQueryFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
 import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
+import com.sh.carexx.bean.repository.RepositoryBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
@@ -782,6 +783,18 @@ public class UCServiceFallback implements UCServiceClient {
 
 	@Override
 	public String queryCustomerOrderTimeForList(CustomerOrderTimeQueryFormBean customerOrderTimeQueryFormBean) {
+		return null;
+	}
+
+	@Override
+	public String queryRepository(RepositoryBean repositoryBean) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String previewRepository(Long id) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

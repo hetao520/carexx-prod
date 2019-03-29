@@ -40,6 +40,7 @@ import com.sh.carexx.bean.order.CustomerOrderTimeQueryFormBean;
 import com.sh.carexx.bean.order.InstSettleQueryFormBean;
 import com.sh.carexx.bean.order.OrderSettleAdjustAmtFormBean;
 import com.sh.carexx.bean.order.WorkQuantityReportFormBean;
+import com.sh.carexx.bean.repository.RepositoryBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
@@ -1500,4 +1501,28 @@ public interface UCServiceClient {
 	 */
 	@RequestMapping(value = "/customerordertime/list", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	String queryCustomerOrderTimeForList(@RequestBody CustomerOrderTimeQueryFormBean customerOrderTimeQueryFormBean);
+	
+	/**
+	 * 
+	 * queryRepository:(文件查询). <br/> 
+	 * 
+	 * @author ht
+	 * @param repositoryBean
+	 * @return 
+	 * @since JDK 1.8
+	 */
+	@RequestMapping(value = "/repository/queryRepository", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    String queryRepository(RepositoryBean repositoryBean);
+
+	/**
+	 * 
+	 * previewRepository:(文件下载). <br/> 
+	 * 
+	 * @author ht 
+	 * @param id
+	 * @return 
+	 * @since JDK 1.8
+	 */
+    @RequestMapping(value = "/repository/previewRepository/{id}", method = RequestMethod.GET, consumes = MediaType.TEXT_HTML_VALUE)
+    String previewRepository(@PathVariable(value = "id") Long id);
 }
