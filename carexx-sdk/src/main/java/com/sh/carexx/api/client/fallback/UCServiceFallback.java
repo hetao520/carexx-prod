@@ -37,6 +37,7 @@ import com.sh.carexx.bean.repository.RepositoryBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
+import com.sh.carexx.bean.statistics.StatisticsBean;
 import com.sh.carexx.bean.user.OAuthLoginFormBean;
 import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.bean.worktype.InstWorkTypeSettleFormBean;
@@ -788,13 +789,16 @@ public class UCServiceFallback implements UCServiceClient {
 
 	@Override
 	public String queryRepository(RepositoryBean repositoryBean) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String previewRepository(Long id) {
-		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public String queryStatistics(StatisticsBean statisticsBean) {
 		return null;
 	}
 }

@@ -44,6 +44,7 @@ import com.sh.carexx.bean.repository.RepositoryBean;
 import com.sh.carexx.bean.staff.InstStaffFormBean;
 import com.sh.carexx.bean.staff.InstStaffQueryFormBean;
 import com.sh.carexx.bean.staff.InstStaffWorkTypeFormBean;
+import com.sh.carexx.bean.statistics.StatisticsBean;
 import com.sh.carexx.bean.user.OAuthLoginFormBean;
 import com.sh.carexx.bean.usermsg.UserMsgFormBean;
 import com.sh.carexx.bean.worktype.InstWorkTypeSettleFormBean;
@@ -1525,4 +1526,16 @@ public interface UCServiceClient {
 	 */
     @RequestMapping(value = "/repository/previewRepository/{id}", method = RequestMethod.GET, consumes = MediaType.TEXT_HTML_VALUE)
     String previewRepository(@PathVariable(value = "id") Long id);
+    
+    /**
+     * 
+     * queryStatistics:(统计明细). <br/> 
+     * 
+     * @author ht
+     * @param statisticsBean
+     * @return 
+     * @since JDK 1.8
+     */
+    @RequestMapping(value = "/statistics/queryStatistics", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    String queryStatistics(StatisticsBean statisticsBean);
 }
